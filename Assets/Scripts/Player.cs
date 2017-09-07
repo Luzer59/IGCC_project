@@ -4,32 +4,35 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float moveSpeed;
-    public float jumpSpeed;
+    public float acceleration;
+    public float maxSpeed;
+    public Transform spawnPoint;
+    public float decelerationDrag;
 
-    private Rigidbody2D rb;
-    private bool grounded = false;
+    private Rigidbody rb;
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
         float vert = Input.GetAxis("Vertical");
         float hor = Input.GetAxis("Horizontal");
-
-        rb.AddForce(Vector2.right * moveSpeed * hor * Time.deltaTime);
-        if (vert > 0.1f && grounded)
+        Vector3 velocity = rb.velocity;
+        velocity += acceleration * new Vector3(hor, 0f, vert).normalized * Time.deltaTime;
+        if (Mathf.Approximately(vert, 0f) & Mathf.Approximately(hor, 0f))
         {
-            rb.AddForce(Vector2.up * jumpSpeed * Time.deltaTime);
+            velocity = Vector3.MoveTowards(velocity, Vector3.zero, decelerationDrag);
         }
-        grounded = false;
+        velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+        rb.velocity = velocity;
     }
 
-    void OnCollisionStay2D(Collision2D col)
+    public void Reset()
     {
-        grounded = true;
+        rb.velocity = Vector3.zero;
+        transform.position = new Vector3(spawnPoint.position.x, transform.position.y, spawnPoint.position.z);
     }
 }
