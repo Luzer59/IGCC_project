@@ -18,8 +18,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        float vert = Input.GetAxis("Vertical");
-        float hor = Input.GetAxis("Horizontal");
+        float vert = Input.GetAxis("Vertical1");
+        float hor = Input.GetAxis("Horizontal1");
         Vector3 velocity = rb.velocity;
         velocity += acceleration * new Vector3(hor, 0f, vert).normalized * Time.deltaTime;
         if (Mathf.Approximately(vert, 0f) & Mathf.Approximately(hor, 0f))

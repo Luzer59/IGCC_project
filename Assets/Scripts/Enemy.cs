@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -10,24 +11,41 @@ public class Enemy : MonoBehaviour
     public float decelerationDrag;
 
     private Rigidbody rb;
+    private NavMeshAgent navAgent;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        navAgent = GetComponent<NavMeshAgent>();
+    }
+
+    void Start()
+    {
+        if (navAgent != null && rb != null)
+        {
+            rb.isKinematic = true;
+        }
     }
 
     void Update()
     {
-        float vert = Input.GetAxis("AIVertical");
-        float hor = Input.GetAxis("AIHorizontal");
-        Vector3 velocity = rb.velocity;
-        velocity += acceleration * new Vector3(hor, 0f, vert).normalized * Time.deltaTime;
-        if (Mathf.Approximately(vert, 0f) & Mathf.Approximately(hor, 0f))
+        if (navAgent == null && rb != null)
         {
-            velocity = Vector3.MoveTowards(velocity, Vector3.zero, decelerationDrag);
+            float vert = Input.GetAxis("Vertical2");
+            float hor = Input.GetAxis("Horizontal2");
+            Vector3 velocity = rb.velocity;
+            velocity += acceleration * new Vector3(hor, 0f, vert).normalized * Time.deltaTime;
+            if (Mathf.Approximately(vert, 0f) & Mathf.Approximately(hor, 0f))
+            {
+                velocity = Vector3.MoveTowards(velocity, Vector3.zero, decelerationDrag);
+            }
+            velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+            rb.velocity = velocity;
         }
-        velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
-        rb.velocity = velocity;
+        if (navAgent != null)
+        {
+            
+        }
     }
 
     void OnCollisionEnter(Collision col)
