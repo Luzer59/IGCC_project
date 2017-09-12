@@ -5,13 +5,14 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public float acceleration;
+    //public float acceleration;
     public float maxSpeed;
     public Transform spawnPoint;
-    public float decelerationDrag;
-    public MovementMode movementMode;
+    //public float decelerationDrag;
+    [HideInInspector]
+    public MovementMode movementMode = MovementMode.NavMeshAxis;
 
-    public enum MovementMode { Free, NavMeshAI }
+    public enum MovementMode { Free, NavMeshClick, NavMeshAxis }
 
     private Rigidbody rb;
     private NavMeshAgent navAgent;
@@ -35,13 +36,18 @@ public class Enemy : MonoBehaviour
                 }
                 break;
 
-            case MovementMode.NavMeshAI:
+            case MovementMode.NavMeshClick:
                 if (rb)
                 {
                     rb.isKinematic = true;
                 }
                 break;
-
+            case MovementMode.NavMeshAxis:
+                if (rb)
+                {
+                    rb.isKinematic = true;
+                }
+                break;
             default:
                 break;
         }
@@ -52,37 +58,38 @@ public class Enemy : MonoBehaviour
         switch (movementMode)
         {
             case MovementMode.Free:
-                if (navAgent)
+                /*float vert = Input.GetAxis("Vertical2");
+                float hor = Input.GetAxis("Horizontal2");
+                Vector3 velocity = rb.velocity;
+                velocity += acceleration * new Vector3(hor, 0f, vert).normalized * Time.deltaTime;
+                if (Mathf.Approximately(vert, 0f) & Mathf.Approximately(hor, 0f))
                 {
-                    float vert = Input.GetAxis("Vertical2");
-                    float hor = Input.GetAxis("Horizontal2");
-                    Vector3 velocity = rb.velocity;
-                    velocity += acceleration * new Vector3(hor, 0f, vert).normalized * Time.deltaTime;
-                    if (Mathf.Approximately(vert, 0f) & Mathf.Approximately(hor, 0f))
-                    {
-                        velocity = Vector3.MoveTowards(velocity, Vector3.zero, decelerationDrag);
-                    }
-                    velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
-                    rb.velocity = velocity;
+                    velocity = Vector3.MoveTowards(velocity, Vector3.zero, decelerationDrag);
                 }
+                velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+                rb.velocity = velocity;*/
                 break;
 
-            case MovementMode.NavMeshAI:
-                if (rb)
+            case MovementMode.NavMeshClick:
+                /*if (Input.GetMouseButtonDown(0))
                 {
-                    if (Input.GetMouseButtonDown(0))
+                    RaycastHit hit;
+                    if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
                     {
-                        RaycastHit hit;
-                        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+                        NavMeshHit navHit;
+                        if (NavMesh.SamplePosition(hit.point, out navHit, navAgent.height * 2, 1))
                         {
-                            NavMeshHit navHit;
-                            if (NavMesh.SamplePosition(hit.point, out navHit, navAgent.height * 2, 1))
-                            {
-                                navAgent.SetDestination(navHit.position);
-                            }
+                            navAgent.SetDestination(navHit.position);
                         }
                     }
-                }
+                }*/
+                break;
+
+            case MovementMode.NavMeshAxis:
+                Vector3 direction = Vector3.zero;
+                direction.z = Input.GetAxisRaw("Vertical2");
+                direction.x = Input.GetAxisRaw("Horizontal2");
+                navAgent.velocity = direction * maxSpeed;
                 break;
 
             default:
@@ -90,11 +97,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider col)
     {
-        if (col.collider.tag == "Player")
+        if (col.tag == "Player")
         {
-            StartCoroutine(Capture(col.collider.GetComponentInParent<Player>()));
+            StartCoroutine(Capture(col.GetComponentInParent<Player>()));
         }
     }
 
