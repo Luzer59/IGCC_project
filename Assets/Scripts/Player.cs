@@ -10,10 +10,12 @@ public class Player : MonoBehaviour
     public float decelerationDrag;
 
     private Rigidbody rb;
+    private Collider[] col;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        col = GetComponentsInChildren<Collider>();
     }
 
     void Update()
@@ -32,7 +34,17 @@ public class Player : MonoBehaviour
 
     public void Reset()
     {
+        SetInteractable(true);
         rb.velocity = Vector3.zero;
         transform.position = new Vector3(spawnPoint.position.x, transform.position.y, spawnPoint.position.z);
+    }
+
+    public void SetInteractable(bool state)
+    {
+        rb.isKinematic = !state;
+        foreach (Collider c in col)
+        {
+            c.enabled = state;
+        }
     }
 }

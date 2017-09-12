@@ -15,11 +15,13 @@ public class Enemy : MonoBehaviour
 
     private Rigidbody rb;
     private NavMeshAgent navAgent;
+    [SerializeField]
+    private Animator animator;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        navAgent = GetComponent<NavMeshAgent>(); 
+        navAgent = GetComponent<NavMeshAgent>();
     }
 
     void Start()
@@ -92,8 +94,7 @@ public class Enemy : MonoBehaviour
     {
         if (col.collider.tag == "Player")
         {
-            Reset();
-            col.collider.GetComponentInParent<Player>().Reset();
+            StartCoroutine(Capture(col.collider.GetComponentInParent<Player>()));
         }
     }
 
@@ -101,5 +102,33 @@ public class Enemy : MonoBehaviour
     {
         rb.velocity = Vector3.zero;
         transform.position = new Vector3(spawnPoint.position.x, transform.position.y, spawnPoint.position.z);
+        navAgent.ResetPath();
+    }
+
+    IEnumerator Capture(Player target)
+    {
+        animator.SetTrigger("Capture");
+        target.SetInteractable(false);
+        float time = 0f;
+        float duration = 0.8f;
+        float paraboleHeight = 1f;
+        Vector3 startPos = target.transform.position;
+        Vector3 endOffset = Vector3.zero;
+        Vector3 startScale = target.transform.localScale;
+        Vector3 endScale = new Vector3(0.3f, 0.3f, 0.3f);
+
+        while (time <= duration)
+        {
+            time += Time.deltaTime;
+            float t = Mathf.Clamp01(time / duration);
+            Vector3 newPos = Vector3.Lerp(startPos, transform.position + endOffset, t);
+            newPos.y = newPos.y + Mathf.Sin(t * Mathf.PI) * paraboleHeight;
+            target.transform.position = newPos;
+            target.transform.localScale = Vector3.Lerp(startScale, endScale, t);
+            yield return null;
+        }
+        yield return new WaitForSeconds(1f);
+        Reset();
+        target.Reset();
     }
 }

@@ -81,6 +81,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4694620131720544}
   - component: {fileID: 137974150785356602}
+  - component: {fileID: 136604392354354292}
   m_Layer: 0
   m_Name: sita
   m_TagString: Untagged
@@ -134,15 +135,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1003261947334530}
-  m_LocalRotation: {x: -0, y: -0.99764854, z: 0, w: -0.06853757}
-  m_LocalPosition: {x: -1.63, y: 0.72, z: 5.65}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4380018793979488}
   - {fileID: 4694620131720544}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -187.86, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4926682720112826
 Transform:
   m_ObjectHideFlags: 1
@@ -174,6 +175,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!136 &136604392354354292
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1539728742381846}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.45
+  m_Height: 1.45
+  m_Direction: 2
+  m_Center: {x: 0.000000023283064, y: -0.00000003025539, z: 0.64442545}
 --- !u!137 &137974150785356602
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
