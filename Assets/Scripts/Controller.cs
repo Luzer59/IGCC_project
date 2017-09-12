@@ -85,8 +85,8 @@ public class Controller : MonoBehaviour {
     {
         //方向 direction
         Vector3 direction = Vector3.zero;
-        direction.y = Input.GetAxisRaw("Vertical");
-        direction.x = Input.GetAxisRaw("Horizontal");
+        direction.y = Input.GetAxisRaw("Vertical2");
+        direction.x = Input.GetAxisRaw("Horizontal2");
         if (direction.magnitude < 0.75f) direction = Vector3.zero;
         //移動　move
         transform.position += direction * speed * Time.deltaTime;
