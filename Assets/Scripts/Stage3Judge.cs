@@ -11,10 +11,10 @@ public class Stage3Judge : MonoBehaviour {
     private GameObject roundText;
 
     [SerializeField]
-    private GameObject playerText;
+    private GameObject playerPicture;
 
     [SerializeField]
-    private GameObject monsterText;
+    private GameObject monsterPicture;
 
     [SerializeField]
     private GameObject monster;
@@ -41,11 +41,11 @@ public class Stage3Judge : MonoBehaviour {
         float timer = timerText.GetComponent<Timer>().time;
         if (timer < 1) 
         {
-            playerText.SetActive(true);
+            playerPicture.SetActive(true);
         }
         else if (Input.GetKeyDown("joystick button 4"))
         {
-            monsterText.SetActive(true);
+            monsterPicture.SetActive(true);
             timerText.GetComponent<Timer>().timerflag = false;
         }
         
@@ -59,8 +59,8 @@ public class Stage3Judge : MonoBehaviour {
             } 
             timerText.GetComponent<Timer>().timerflag = true;
             timerText.GetComponent<Timer>().time = 30.0f;
-            playerText.SetActive(false);
-            monsterText.SetActive(false);
+            playerPicture.SetActive(false);
+            monsterPicture.SetActive(false);
             roundText.GetComponent<Text>().text = "Round " + round;
             monster.transform.position = monsterpos;
             MainCamera.enabled = true;
