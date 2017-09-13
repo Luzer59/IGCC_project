@@ -49,12 +49,12 @@ public class Controller : MonoBehaviour {
                     else
                         Speechballoon.SetActive(false);
             }
-            //L1trigger Attack 
-            if (Input.GetKeyDown("joystick button 4"))
-            {
-                attack.SetActive(!attack.activeSelf);
-                Speechballoon.SetActive(false);
-            }
+            ////L1trigger Attack 
+            //if (Input.GetKeyDown("joystick button 4"))
+            //{
+            //    attack.SetActive(!attack.activeSelf);
+            //    Speechballoon.SetActive(false);
+            //}
         }
     }
 
