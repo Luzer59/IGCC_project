@@ -17,13 +17,22 @@ public class Stage3Judge : MonoBehaviour {
     private GameObject monsterText;
 
     [SerializeField]
-    private GameObject attack;
+    private GameObject monster;
+
+    private Vector3 monsterpos;
+
+    [SerializeField]
+    private Camera MainCamera;
+
+    [SerializeField]
+    private Camera SubCamera;
 
     private int round = 1;
 
     // Use this for initialization
     void Start () {
         roundText.GetComponent<Text>().text = "Round " + round;
+        monsterpos = monster.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -42,13 +51,20 @@ public class Stage3Judge : MonoBehaviour {
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            round++;
+            //end
+            if (round >= 4)
+            {
+
+            } 
             timerText.GetComponent<Timer>().timerflag = true;
             timerText.GetComponent<Timer>().time = 30.0f;
             playerText.SetActive(false);
             monsterText.SetActive(false);
-            round++;
             roundText.GetComponent<Text>().text = "Round " + round;
-            attack.SetActive(false);
+            monster.transform.position = monsterpos;
+            MainCamera.enabled = true;
+            SubCamera.enabled = false;
         }
     }
 }
