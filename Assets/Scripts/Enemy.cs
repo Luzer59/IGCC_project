@@ -11,11 +11,14 @@ public class Enemy : MonoBehaviour
     //public float decelerationDrag;
     [HideInInspector]
     public MovementMode movementMode = MovementMode.NavMeshAxis;
+    public StageJudge cont;
+    public float joystickDeadzone;
 
     public enum MovementMode { Free, NavMeshClick, NavMeshAxis }
 
     private Rigidbody rb;
-    private NavMeshAgent navAgent;
+    [HideInInspector]
+    public NavMeshAgent navAgent;
     [SerializeField]
     private Animator animator;
 
@@ -87,9 +90,11 @@ public class Enemy : MonoBehaviour
 
             case MovementMode.NavMeshAxis:
                 Vector3 direction = Vector3.zero;
-                direction.z = Input.GetAxisRaw("Vertical2");
-                direction.x = Input.GetAxisRaw("Horizontal2");
-                navAgent.velocity = direction * maxSpeed;
+                float z = Input.GetAxisRaw("Vertical2");
+                float x = Input.GetAxisRaw("Horizontal2");
+                direction.z = z > joystickDeadzone && z < -joystickDeadzone ? 0f : z;
+                direction.x = x > joystickDeadzone && x < -joystickDeadzone ? 0f : x;
+                navAgent.velocity =  direction * maxSpeed;
                 break;
 
             default:
@@ -114,8 +119,13 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Capture(Player target)
     {
+        StartCoroutine(cont.ChangeRound());
         animator.SetTrigger("Capture");
         target.SetInteractable(false);
+        enabled = false;
+        navAgent.enabled = false;
+        target.enabled = false;
+        target.navAgent.enabled = false;
         float time = 0f;
         float duration = 0.8f;
         float paraboleHeight = 1f;
@@ -134,7 +144,11 @@ public class Enemy : MonoBehaviour
             target.transform.localScale = Vector3.Lerp(startScale, endScale, t);
             yield return null;
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(5f);
+        enabled = true;
+        navAgent.enabled = true;
+        target.enabled = true;
+        target.navAgent.enabled = true;
         Reset();
         target.Reset();
     }

@@ -27,7 +27,7 @@ public class BGMController : MonoBehaviour
         else
         {
             source.Stop();
-            source.clip = firstBGM;
+            source.clip = endBGM;
             source.Play();
         }
     }

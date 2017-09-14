@@ -11,7 +11,8 @@ public class Player : MonoBehaviour
     //public float decelerationDrag;
 
     private Rigidbody rb;
-    private NavMeshAgent navAgent;
+    [HideInInspector]
+    public NavMeshAgent navAgent;
     private Collider[] col;
 
     void Awake()

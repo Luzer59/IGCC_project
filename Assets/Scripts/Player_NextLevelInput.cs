@@ -7,6 +7,8 @@ public class Player_NextLevelInput : MonoBehaviour
 {
     public float progress;
     public float timeToFill;
+    public bool active;
+    public LevelChanger levelChanger;
 
     private float leftTriggerHeldDownTime;
     private float rightTriggerHeldDownTime;
@@ -14,22 +16,31 @@ public class Player_NextLevelInput : MonoBehaviour
     [SerializeField]
     private string sceneName;
     
+    public void SetActive(bool state)
+    {
+        active = state;
+    }
+
     void Update()
     {
-        bool left = Input.GetButton("ControllerTriggerLeft");
-        bool right = Input.GetButton("ControllerTriggerRight");
-        if (left && right)
+        if (active)
         {
-            progress += Time.deltaTime / timeToFill;
+            bool left = Input.GetButton("ControllerTriggerLeft");
+            bool right = Input.GetButton("ControllerTriggerRight");
+            bool newOverrideButton = Input.GetButton("NextLevelInputOverride");
+            if (newOverrideButton)
+            {
+                progress += Time.deltaTime / timeToFill;
+            }
+            else
+            {
+                progress -= Time.deltaTime / (timeToFill * 0.5f);
+            }
+            if (progress >= 1f)
+            {
+                LevelChanger.instance.ChangeLevel(sceneName);
+            }
+            progress = Mathf.Clamp(progress, 0f, 1f);
         }
-        else
-        {
-            progress -= Time.deltaTime / (timeToFill * 0.5f);
-        }
-        if (progress >= 1f)
-        {
-            SceneManager.LoadScene(sceneName);
-        }
-        progress = Mathf.Clamp(progress, 0f, 1f);
     }
 }

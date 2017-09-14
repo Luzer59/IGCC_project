@@ -5,26 +5,28 @@ using UnityEngine.UI;
 
 public class StageJudge : MonoBehaviour
 {
+    public UnityEngine.Events.UnityEvent gameEnd;
+
 
     [SerializeField]
-    private GameObject timerText;
+    protected GameObject timerText;
 
     [SerializeField]
-    private GameObject roundText;
+    protected GameObject roundText;
 
     [SerializeField]
-    private GameObject playerPicture;
+    protected GameObject playerPicture;
 
     [SerializeField]
-    private GameObject monsterPicture;
+    protected GameObject monsterPicture;
 
     [SerializeField]
-    private Camera MainCamera;
+    protected Camera MainCamera;
 
     [SerializeField]
-    private Camera SubCamera;
+    protected Camera SubCamera;
 
-    private int round = 1;
+    protected int round = 1;
 
     public event System.Action<int> roundChanged = delegate { };
     public AudioSource aSource;
@@ -48,25 +50,24 @@ public class StageJudge : MonoBehaviour
             playerPicture.SetActive(true);
             aSource.PlayOneShot(playerWinSound);
         }
+    }
 
-        if (Input.GetKeyDown("joystick button 4"))
+    public IEnumerator ChangeRound()
+    {
+        monsterPicture.SetActive(true);
+        timerText.GetComponent<Timer>().timerflag = false;
+        MainCamera.enabled = false;
+        SubCamera.enabled = true;
+        aSource.PlayOneShot(enemyWinSound);
+        yield return new WaitForSeconds(5f);
+
+        if (round == 3)
         {
-            monsterPicture.SetActive(true);
-            timerText.GetComponent<Timer>().timerflag = false;
-            MainCamera.enabled = false;
-            SubCamera.enabled = true;
-            aSource.PlayOneShot(enemyWinSound);
+            gameEnd.Invoke();
         }
-
-        //Press the spacebar to the next round
-        if (Input.GetKeyDown(KeyCode.Space))
+        else
         {
             round++;
-            //end
-            if (round >= 4)
-            {
-
-            }
             timerText.GetComponent<Timer>().timerflag = true;
             timerText.GetComponent<Timer>().time = 30.0f;
             playerPicture.SetActive(false);
@@ -76,5 +77,10 @@ public class StageJudge : MonoBehaviour
             SubCamera.enabled = false;
             roundChanged.Invoke(round);
         }
+    }
+
+    protected void InvokeRoundChanged(int round)
+    {
+        roundChanged.Invoke(round);
     }
 }
