@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player_NextLevelInput : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class Player_NextLevelInput : MonoBehaviour
 
     private float leftTriggerHeldDownTime;
     private float rightTriggerHeldDownTime;
+
+    [SerializeField]
+    private string sceneName;
     
     void Update()
     {
@@ -24,7 +28,7 @@ public class Player_NextLevelInput : MonoBehaviour
         }
         if (progress >= 1f)
         {
-            print("NextLevelInput triggered");
+            SceneManager.LoadScene(sceneName);
         }
         progress = Mathf.Clamp(progress, 0f, 1f);
     }
