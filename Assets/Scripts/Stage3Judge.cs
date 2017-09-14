@@ -13,6 +13,7 @@ public class Stage3Judge : StageJudge
     {
         base.Start();
         monsterpos = monster.transform.position;
+        monster.GetComponent<Enemy>().movementMode = Enemy.MovementMode.Free;
     }
 
     // Update is called once per frame
