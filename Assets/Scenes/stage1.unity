@@ -283,7 +283,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 83b6c8725ad5939479e8cbde067aafd3, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -978,7 +978,7 @@ Prefab:
     - target: {fileID: 224544027663538234, guid: a5cc93de7f248ca4f8e482c55441054a,
         type: 2}
       propertyPath: m_LocalScale.x
-      value: 92.65195
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 224544027663538234, guid: a5cc93de7f248ca4f8e482c55441054a,
         type: 2}

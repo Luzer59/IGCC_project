@@ -32,6 +32,10 @@ public class StageJudge : MonoBehaviour
     public AudioSource aSource;
     public AudioClip playerWinSound;
     public AudioClip enemyWinSound;
+    public Player player;
+    public Enemy enemy;
+
+    private Coroutine cor = null;
 
     // Use this for initialization
     protected virtual void Start()
@@ -45,14 +49,56 @@ public class StageJudge : MonoBehaviour
     {
 
         float timer = timerText.GetComponent<Timer>().time;
-        if (timer < 1)
+        if (timer < 1 && cor == null)
         {
-            playerPicture.SetActive(true);
-            aSource.PlayOneShot(playerWinSound);
+            cor = StartCoroutine(ChangeRoundPlayer());
         }
     }
 
-    public IEnumerator ChangeRound()
+    public IEnumerator ChangeRoundPlayer()
+    {
+        playerPicture.SetActive(true);
+        timerText.GetComponent<Timer>().timerflag = false;
+        if (player)
+        {
+            player.enabled = false;
+        }
+        if (enemy)
+        {
+            enemy.enabled = false;
+        }
+        aSource.PlayOneShot(playerWinSound);
+        yield return new WaitForSeconds(5f);
+
+        if (round == 3)
+        {
+            gameEnd.Invoke();
+        }
+        else
+        {
+            print("Player win");
+            round++;
+            timerText.GetComponent<Timer>().timerflag = true;
+            timerText.GetComponent<Timer>().time = 30.0f;
+            playerPicture.SetActive(false);
+            monsterPicture.SetActive(false);
+            roundText.GetComponent<Text>().text = "Round " + round;
+            if (player)
+            {
+                player.enabled = true;
+            }
+            if (enemy)
+            {
+                enemy.enabled = true;
+            }
+            player.Reset();
+            enemy.Reset();
+            roundChanged.Invoke(round);
+        }
+        cor = null;
+    }
+
+    public IEnumerator ChangeRoundEnemy()
     {
         monsterPicture.SetActive(true);
         timerText.GetComponent<Timer>().timerflag = false;
@@ -67,6 +113,7 @@ public class StageJudge : MonoBehaviour
         }
         else
         {
+            print("Enemy win");
             round++;
             timerText.GetComponent<Timer>().timerflag = true;
             timerText.GetComponent<Timer>().time = 30.0f;
@@ -77,6 +124,7 @@ public class StageJudge : MonoBehaviour
             SubCamera.enabled = false;
             roundChanged.Invoke(round);
         }
+        cor = null;
     }
 
     protected void InvokeRoundChanged(int round)

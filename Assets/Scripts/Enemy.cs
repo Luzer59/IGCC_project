@@ -119,7 +119,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Capture(Player target)
     {
-        StartCoroutine(cont.ChangeRound());
+        StartCoroutine(cont.ChangeRoundEnemy());
         animator.SetTrigger("Capture");
         target.SetInteractable(false);
         enabled = false;

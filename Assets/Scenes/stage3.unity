@@ -723,7 +723,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 313916389}
   m_LocalRotation: {x: 0.38429528, y: 0, z: 0, w: 0.92321026}
-  m_LocalPosition: {x: -3.42, y: 6.68, z: 1.3}
+  m_LocalPosition: {x: -3.42, y: 7.61, z: -0.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -770,8 +770,10 @@ MonoBehaviour:
   MainCamera: {fileID: 313916393}
   SubCamera: {fileID: 656497948}
   aSource: {fileID: 341702831}
-  playerWinSound: {fileID: 0}
-  enemyWinSound: {fileID: 0}
+  playerWinSound: {fileID: 8300000, guid: 46abdb2825d08054fa2ce4e1add90fbc, type: 3}
+  enemyWinSound: {fileID: 8300000, guid: e5d488609875e7d4588c1335c667daef, type: 3}
+  player: {fileID: 0}
+  enemy: {fileID: 848201227}
   monster: {fileID: 867891445}
 --- !u!4 &341702830
 Transform:
@@ -879,8 +881,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cont: {fileID: 341702829}
   source: {fileID: 341702831}
-  firstBGM: {fileID: 0}
-  endBGM: {fileID: 0}
+  firstBGM: {fileID: 8300000, guid: 9b3dae3106811734a9ebc3cff2936953, type: 3}
+  endBGM: {fileID: 8300000, guid: 0a185e85aeac0d0479e42e272908b0e4, type: 3}
 --- !u!1 &345290268
 GameObject:
   m_ObjectHideFlags: 0
@@ -1615,6 +1617,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 541ffc92026d26146bfef0493c0d1fa8, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &848201227 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114498462647089300, guid: 541ffc92026d26146bfef0493c0d1fa8,
+    type: 2}
+  m_PrefabInternal: {fileID: 848201226}
+  m_Script: {fileID: 11500000, guid: f6f89d41912a3754eb40b9ea60160551, type: 3}
 --- !u!1 &849805355
 GameObject:
   m_ObjectHideFlags: 0

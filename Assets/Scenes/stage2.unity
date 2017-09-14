@@ -1244,6 +1244,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1041831135 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114498462647089300, guid: 541ffc92026d26146bfef0493c0d1fa8,
+    type: 2}
+  m_PrefabInternal: {fileID: 1235449614}
+  m_Script: {fileID: 11500000, guid: f6f89d41912a3754eb40b9ea60160551, type: 3}
 --- !u!1 &1076088155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1382,6 +1388,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114773888064837058, guid: e556a3a477977d04e8a9370f63cc83de,
+        type: 2}
+      propertyPath: time
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e556a3a477977d04e8a9370f63cc83de, type: 2}
   m_IsPrefabParent: 0
@@ -1453,6 +1464,11 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 561ab5c04dc544e4aa108963d296e9a5, type: 2}
+    - target: {fileID: 114498462647089300, guid: 541ffc92026d26146bfef0493c0d1fa8,
+        type: 2}
+      propertyPath: maxSpeed
+      value: 3.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 541ffc92026d26146bfef0493c0d1fa8, type: 2}
   m_IsPrefabParent: 0
@@ -1846,6 +1862,12 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0.54
   m_ShadowAngle: 0
+--- !u!114 &1462852998 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114469656889797908, guid: 414e70ffed0177b4f8aa5adc35f9672e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1980519148}
+  m_Script: {fileID: 11500000, guid: dff12a3e4ee1f5f48a8e5ff5c169c79a, type: 3}
 --- !u!1 &1466620445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2826,6 +2848,11 @@ Prefab:
       propertyPath: spawnPoint
       value: 
       objectReference: {fileID: 1487488548}
+    - target: {fileID: 114469656889797908, guid: 414e70ffed0177b4f8aa5adc35f9672e,
+        type: 2}
+      propertyPath: maxSpeed
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 414e70ffed0177b4f8aa5adc35f9672e, type: 2}
   m_IsPrefabParent: 0
@@ -3164,6 +3191,8 @@ MonoBehaviour:
   aSource: {fileID: 2145206729}
   playerWinSound: {fileID: 8300000, guid: 46abdb2825d08054fa2ce4e1add90fbc, type: 3}
   enemyWinSound: {fileID: 8300000, guid: e5d488609875e7d4588c1335c667daef, type: 3}
+  player: {fileID: 1462852998}
+  enemy: {fileID: 1041831135}
 --- !u!4 &2145206727
 Transform:
   m_ObjectHideFlags: 0
